@@ -1111,3 +1111,334 @@ html {
 ::-webkit-scrollbar-thumb:hover {
     background: var(--secondary-color);
 }
+
+/* Enhanced Animations */
+@keyframes slideInFromLeft {
+    0% {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInFromRight {
+    0% {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes rotateIn {
+    0% {
+        transform: rotate(-180deg) scale(0);
+        opacity: 0;
+    }
+    100% {
+        transform: rotate(0deg) scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes zoomInBounce {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes wiggle {
+    0%, 7% { transform: rotateZ(0); }
+    15% { transform: rotateZ(-15deg); }
+    20% { transform: rotateZ(10deg); }
+    25% { transform: rotateZ(-10deg); }
+    30% { transform: rotateZ(6deg); }
+    35% { transform: rotateZ(-4deg); }
+    40%, 100% { transform: rotateZ(0); }
+}
+
+@keyframes heartbeat {
+    0% { transform: scale(1); }
+    14% { transform: scale(1.3); }
+    28% { transform: scale(1); }
+    42% { transform: scale(1.3); }
+    70% { transform: scale(1); }
+}
+
+@keyframes glow {
+    0%, 100% {
+        box-shadow: 0 0 5px var(--primary-color);
+    }
+    50% {
+        box-shadow: 0 0 20px var(--primary-color), 0 0 30px var(--primary-color);
+    }
+}
+
+@keyframes typewriter {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+@keyframes blink {
+    50% { border-color: transparent; }
+}
+
+/* Enhanced Menu Item Animations */
+.menu-item {
+    animation: zoomInBounce 0.6s ease-out;
+    animation-fill-mode: both;
+}
+
+.menu-item:nth-child(odd) {
+    animation: slideInFromLeft 0.8s ease-out;
+    animation-fill-mode: both;
+}
+
+.menu-item:nth-child(even) {
+    animation: slideInFromRight 0.8s ease-out;
+    animation-fill-mode: both;
+}
+
+.menu-item:hover .menu-item-image {
+    animation: heartbeat 1.5s ease-in-out infinite;
+}
+
+.menu-item:hover {
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+/* Enhanced Button Animations */
+.btn:hover {
+    animation: wiggle 0.8s ease-in-out;
+}
+
+.add-to-cart-btn:active {
+    animation: zoomInBounce 0.3s ease-out;
+}
+
+/* Enhanced Cart Animations */
+.cart-item {
+    animation: slideInFromLeft 0.5s ease-out;
+}
+
+.cart-item:nth-child(even) {
+    animation: slideInFromRight 0.5s ease-out;
+}
+
+/* Enhanced Loading Animation */
+.loading-screen {
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color), var(--accent-color));
+    background-size: 400% 400%;
+    animation: gradientShift 3s ease infinite;
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Enhanced Notification Animation */
+.notification.show {
+    animation: slideInFromRight 0.5s ease-out, wiggle 0.5s ease-out 0.5s;
+}
+
+/* Enhanced Form Animations */
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    animation: glow 1s ease-in-out;
+}
+
+/* Enhanced Order Card Animations */
+.order-card {
+    animation: rotateIn 0.6s ease-out;
+}
+
+.order-card:hover {
+    animation: heartbeat 1s ease-in-out;
+}
+
+/* Enhanced Admin Stats Animation */
+.stat-card {
+    animation: zoomInBounce 0.8s ease-out;
+    animation-delay: calc(var(--animation-order, 0) * 0.1s);
+}
+
+.stat-card:hover .stat-icon {
+    animation: rotateIn 0.5s ease-out;
+}
+
+/* Typewriter Effect for Title */
+.typewriter-text {
+    overflow: hidden;
+    border-right: 3px solid white;
+    white-space: nowrap;
+    margin: 0 auto;
+    animation: typewriter 3s steps(40, end), blink 0.75s step-end infinite;
+}
+
+/* Floating Elements */
+.floating-element {
+    position: absolute;
+    animation: floatUpDown 3s ease-in-out infinite;
+}
+
+@keyframes floatUpDown {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+}
+
+/* Enhanced Category Filter Animation */
+.filter-btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.filter-btn::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.3s, height 0.3s;
+}
+
+.filter-btn:hover::after {
+    width: 300px;
+    height: 300px;
+}
+
+/* Enhanced Table Animation */
+.orders-table tr {
+    animation: slideInFromLeft 0.5s ease-out;
+    animation-fill-mode: both;
+    animation-delay: calc(var(--row-index, 0) * 0.1s);
+}
+
+.orders-table tr:hover {
+    animation: glow 0.5s ease-out;
+}
+
+/* Particle Effect */
+.particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    animation: particleFloat 6s linear infinite;
+}
+
+@keyframes particleFloat {
+    0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100px) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* Success Animation Enhancement */
+.success-checkmark {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: block;
+    stroke-width: 2;
+    stroke: var(--success-color);
+    stroke-miterlimit: 10;
+    margin: 10% auto;
+    box-shadow: inset 0px 0px 0px var(--success-color);
+    animation: fill 0.4s ease-in-out 0.4s forwards, scale 0.3s ease-in-out 0.9s both;
+}
+
+.success-checkmark-circle {
+    stroke-dasharray: 166;
+    stroke-dashoffset: 166;
+    stroke-width: 2;
+    stroke-miterlimit: 10;
+    stroke: var(--success-color);
+    fill: none;
+    animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+}
+
+.success-checkmark-check {
+    transform-origin: 50% 50%;
+    stroke-dasharray: 48;
+    stroke-dashoffset: 48;
+    animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
+}
+
+@keyframes stroke {
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes scale {
+    0%, 100% {
+        transform: none;
+    }
+    50% {
+        transform: scale3d(1.1, 1.1, 1);
+    }
+}
+
+@keyframes fill {
+    100% {
+        box-shadow: inset 0px 0px 0px 30px var(--success-color);
+    }
+}
+
+/* Mobile Animation Optimizations */
+@media (max-width: 768px) {
+    .menu-item:nth-child(odd),
+    .menu-item:nth-child(even) {
+        animation: fadeInUp 0.6s ease-out;
+    }
+    
+    .cart-item,
+    .cart-item:nth-child(even) {
+        animation: fadeInUp 0.5s ease-out;
+    }
+    
+    /* Reduce motion for better mobile performance */
+    @media (prefers-reduced-motion: reduce) {
+        * {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+        }
+    }
+}

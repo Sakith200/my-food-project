@@ -5,6 +5,7 @@ let currentOrders = [];
 // Initialize the application
 document.addEventListener('DOMContentLoaded', function() {
     // Show loading screen
+    createParticles();
     setTimeout(() => {
         document.getElementById('loadingScreen').classList.add('hidden');
         document.getElementById('mainContainer').style.display = 'block';
@@ -15,8 +16,67 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Add scroll animations
         addScrollAnimations();
+        
+        // Initialize enhanced animations
+        initializeEnhancedAnimations();
     }, 2000);
 });
+
+// Create particle effect
+function createParticles() {
+    const particlesContainer = document.createElement('div');
+    particlesContainer.className = 'particles';
+    document.querySelector('.loading-screen').appendChild(particlesContainer);
+    
+    for (let i = 0; i < 50; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.animationDelay = Math.random() * 6 + 's';
+        particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+        particlesContainer.appendChild(particle);
+    }
+}
+
+// Initialize enhanced animations
+function initializeEnhancedAnimations() {
+    // Add staggered animation delays to menu items
+    const menuItems = document.querySelectorAll('.menu-item');
+    menuItems.forEach((item, index) => {
+        item.style.animationDelay = (index * 0.1) + 's';
+    });
+    
+    // Add staggered animation delays to stat cards
+    const statCards = document.querySelectorAll('.stat-card');
+    statCards.forEach((card, index) => {
+        card.style.setProperty('--animation-order', index);
+    });
+    
+    // Add typewriter effect to title
+    const title = document.querySelector('.animated-title');
+    if (title) {
+        title.classList.add('typewriter-text');
+    }
+    
+    // Initialize intersection observer for scroll animations
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.animationPlayState = 'running';
+            }
+        });
+    }, observerOptions);
+    
+    // Observe all animated elements
+    document.querySelectorAll('.menu-item, .order-card, .stat-card').forEach(el => {
+        observer.observe(el);
+    });
+}
 
 // Show notification
 function showNotification(message, type = 'success') {
@@ -342,7 +402,10 @@ function showOrderSuccessAnimation() {
         <div style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
                     background: white; padding: 40px; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.2);
                     text-align: center; z-index: 10000; animation: successPop 0.5s ease;">
-            <i class="fas fa-check-circle" style="font-size: 4em; color: var(--success-color); margin-bottom: 20px;"></i>
+            <svg class="success-checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                <circle class="success-checkmark-circle" cx="26" cy="26" r="25" fill="none"/>
+                <path class="success-checkmark-check" fill="none" d="m14.1 27.2l7.1 7.2 16.7-16.8"/>
+            </svg>
             <h3 style="color: var(--dark-color); margin-bottom: 10px;">Order Placed Successfully!</h3>
             <p style="color: #666;">Thank you for your order. We'll prepare it with love!</p>
         </div>
@@ -428,7 +491,7 @@ function displayAdminOrders(orders) {
     let tableHTML = '';
     orders.forEach(order => {
         tableHTML += `
-            <tr>
+            <tr style="--row-index: ${index};">
                 <td>#${order.id}</td>
                 <td>${order.customer_name}</td>
                 <td>${order.customer_phone}</td>
@@ -600,8 +663,65 @@ style.textContent = `
         0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
         100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
     }
+    
+    @keyframes menuItemHover {
+        0% { transform: translateY(0) rotateY(0); }
+        50% { transform: translateY(-10px) rotateY(5deg); }
+        100% { transform: translateY(-5px) rotateY(0); }
+    }
+    
+    .menu-item:hover {
+        animation: menuItemHover 0.6s ease-in-out;
+    }
+    
+    @keyframes buttonPress {
+        0% { transform: scale(1); }
+        50% { transform: scale(0.95); }
+        100% { transform: scale(1); }
+    }
+    
+    .btn:active {
+        animation: buttonPress 0.2s ease-in-out;
+    }
 `;
 document.head.appendChild(style);
+
+// Enhanced cart animation
+function animateCartUpdate() {
+    const cartIcon = document.querySelector('.cart-icon');
+    const cartInfo = document.querySelector('.cart-info');
+    
+    cartIcon.style.animation = 'heartbeat 0.6s ease-in-out';
+    cartInfo.style.animation = 'glow 0.8s ease-in-out';
+    
+    setTimeout(() => {
+        cartIcon.style.animation = '';
+        cartInfo.style.animation = '';
+    }, 800);
+}
+
+// Enhanced menu item interaction
+function enhanceMenuItemInteractions() {
+    const menuItems = document.querySelectorAll('.menu-item');
+    
+    menuItems.forEach(item => {
+        item.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-10px) scale(1.02)';
+            this.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+        });
+        
+        item.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0) scale(1)';
+        });
+    });
+}
+
+// Call enhanced interactions when DOM is ready
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(() => {
+        enhanceMenuItemInteractions();
+    }, 2500);
+});
 
 // Add keyboard shortcuts
 document.addEventListener('keydown', function(e) {
@@ -685,3 +805,48 @@ function initializeTooltips() {
 
 // Call initialize tooltips when DOM is ready
 document.addEventListener('DOMContentLoaded', initializeTooltips);
+
+// Enhanced scroll reveal animation
+function revealOnScroll() {
+    const reveals = document.querySelectorAll('.menu-item, .order-card, .stat-card');
+    
+    for (let i = 0; i < reveals.length; i++) {
+        const windowHeight = window.innerHeight;
+        const elementTop = reveals[i].getBoundingClientRect().top;
+        const elementVisible = 150;
+        
+        if (elementTop < windowHeight - elementVisible) {
+            reveals[i].classList.add('active');
+        } else {
+            reveals[i].classList.remove('active');
+        }
+    }
+}
+
+window.addEventListener('scroll', revealOnScroll);
+
+// Performance optimization for animations
+function optimizeAnimations() {
+    // Reduce animations on low-end devices
+    if (navigator.hardwareConcurrency && navigator.hardwareConcurrency < 4) {
+        document.documentElement.style.setProperty('--animation-duration', '0.2s');
+    }
+    
+    // Pause animations when tab is not visible
+    document.addEventListener('visibilitychange', function() {
+        const animatedElements = document.querySelectorAll('[style*="animation"]');
+        
+        if (document.hidden) {
+            animatedElements.forEach(el => {
+                el.style.animationPlayState = 'paused';
+            });
+        } else {
+            animatedElements.forEach(el => {
+                el.style.animationPlayState = 'running';
+            });
+        }
+    });
+}
+
+// Initialize performance optimizations
+document.addEventListener('DOMContentLoaded', optimizeAnimations);
